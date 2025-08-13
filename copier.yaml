@@ -1,0 +1,7 @@
+# ref: <https://copier.readthedocs.io/en/stable/configuring/>
+# ref: <https://gitlab.com/dreamer-labs/libraries/jinja2-ansible-filters/>
+# ref: <https://jinja.palletsprojects.com/en/stable/templates/>
+
+_answers_file: .config/copier/.copier-answers.rust.yaml
+
+_subdirectory: template
