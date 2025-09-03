@@ -5,62 +5,29 @@ name: Test
 
 on:
   push:
-    branches-ignore:
-      - assets**
-      - dist**
-      - gh-pages
   pull_request:
   workflow_dispatch:
 
 jobs:
-  pre:
-    name: Pre
+  skip-duplicate:
+    name: Skip Duplicate
     permissions:
       actions: write
     runs-on: ubuntu-latest
     outputs:
-      should-skip: ${{ steps.pre.outputs.should-skip }}
+      should-skip: ${{ steps.skip-duplicate.outputs.should-skip }}
     steps:
-      - id: pre
-        name: Skip Duplicate Actions
-        uses: liblaf/actions-ts/pre@dist
+      - id: skip-duplicate
+        name: Skip Duplicate
+        uses: liblaf/actions/skip-duplicate@dist
         with:
           cancel-others: true
-
-  build:
-    name: Build (${{ matrix.platform.target }})
-    needs:
-      - pre
-    if: needs.pre.outputs.should-skip != 'true'
-    runs-on: ${{ matrix.platform.runner }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Build
-        uses: houseabsolute/actions-rust-cross@v1
-        with:
-          target: ${{ matrix.platform.target }}
-          args: --all-features
-    strategy:
-      matrix:
-        platform:
-          - runner: macos-latest
-            target: aarch64-apple-darwin
-          - runner: macos-latest
-            target: x86_64-apple-darwin
-          - runner: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-          - runner: ubuntu-latest
-            target: x86_64-unknown-linux-musl
-          - runner: windows-latest
-            target: x86_64-pc-windows-msvc
-      fail-fast: false
 
   test:
     name: Test (${{ matrix.platform.target }})
     needs:
-      - pre
-    if: needs.pre.outputs.should-skip != 'true'
+      - skip-duplicate
+    if: needs.skip-duplicate.outputs.should-skip != 'true'
     runs-on: ${{ matrix.platform.runner }}
     steps:
       - name: Checkout

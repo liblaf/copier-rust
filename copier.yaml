@@ -9,10 +9,15 @@ _envops:
   comment_start_string: "# {#"
   line_statement_prefix: "# %%"
 
+_migrations: &migrations
+  - rm --force --verbose '.github/workflows/publish.yaml'
+
 _skip_if_exists:
   - Cargo.toml
 
 _subdirectory: template
+
+_tasks: *migrations
 
 answers_file_shared:
   type: str
