@@ -40,7 +40,7 @@ jobs:
       - name: Distribute
         run: pipx run --python '3.12' --fetch-missing-python 'https://raw.githubusercontent.com/liblaf/copier-rust/refs/heads/main/scripts/dist.py'
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dist-${{ matrix.platform.target }}
           path: dist/*
