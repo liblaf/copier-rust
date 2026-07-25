@@ -19,7 +19,7 @@ jobs:
     steps:
       - id: skip-duplicate
         name: Skip Duplicate
-        uses: liblaf/actions/skip-duplicate@dist
+        uses: liblaf/actions/skip-duplicate@f6cf271d2b7400fb019d0366c1a389ab23239730 # dist
         with:
           cancel-others: true
 
@@ -31,7 +31,7 @@ jobs:
     runs-on: ${{ matrix.platform.runner }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
       - name: Build
         uses: houseabsolute/actions-rust-cross@v1
         with:
@@ -40,7 +40,7 @@ jobs:
       - name: Distribute
         run: pipx run --python '3.12' --fetch-missing-python 'https://raw.githubusercontent.com/liblaf/copier-rust/refs/heads/main/scripts/dist.py'
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: dist-${{ matrix.platform.target }}
           path: dist/*
